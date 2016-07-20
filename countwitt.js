@@ -37,3 +37,7 @@ twitter.stream(
 setInterval(function () {
     console.log('awesome: ' + count.awesome);
 }, 3000);
+
+
+// export this obect into a module so that it can be easily reused
+module.exports = count;
