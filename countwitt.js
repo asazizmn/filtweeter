@@ -7,9 +7,8 @@ var ntwitter = require('ntwitter'),
     // initialise twitter object to allow streaming
     twitter = ntwitter(credentials),
 
+    // word filters and an object to keep count of all the words
     trackedWords = ['awesome'],
-
-    // an object to keep track of all the filtered words
     count = {};
 
 
