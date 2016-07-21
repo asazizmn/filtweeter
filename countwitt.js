@@ -28,15 +28,10 @@ twitter.stream(
         stream.on('data', function (tweet) {
             if (tweet.text.indexOf('awesome') > -1) {
                 count.awesome += 1;
-                //console.log('[' + tweet.created_at + ']' + tweet.text);
             }
         });
     }
 );
-
-setInterval(function () {
-    console.log('awesome: ' + count.awesome);
-}, 3000);
 
 
 // export this obect into a module so that it can be easily reused
