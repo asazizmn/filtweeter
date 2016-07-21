@@ -7,12 +7,20 @@ var ntwitter = require('ntwitter'),
     // initialise twitter object to allow streaming
     twitter = ntwitter(credentials),
 
+    trackedWords = ['awesome'],
+
     // an object to keep track of all the filtered words
-    // this hardcoded approach is not the best way to do this,
-    // however for the purpose of demonstration, it suffices 
-    count = {
-        'awesome': 0
-    };
+    count = {};
+
+
+// please note that in js ...
+// 'count.awesome = 0' can also be accessed with
+// 'count[awesome] = 0'. It's generally recommended to ...
+// ... stick to the dot notation format. However, in this particular circumstance
+// it is advisable to take advantage of latter method to allow for other than hard coding!
+trackedWords.forEach(function (word) {
+    count[word] = 0;
+});
 
 
 // define the stream
@@ -22,21 +30,18 @@ var ntwitter = require('ntwitter'),
 twitter.stream(
     'statuses/filter',
 
-    { 'track': ['awesome'] },
+    { 'track': trackedWords },
 
     function (stream) {
         stream.on('data', function (tweet) {
-            if (tweet.text.indexOf('awesome') > -1) {
-                count.awesome += 1;
-                //console.log('[' + tweet.created_at + ']' + tweet.text);
-            }
+            trackedWords.forEach(function (word) {
+                if (tweet.text.indexOf(word) > -1) {
+                    count[word] += 1;
+                }
+            });
         });
     }
 );
-
-setInterval(function () {
-    console.log('awesome: ' + count.awesome);
-}, 3000);
 
 
 // export this obect into a module so that it can be easily reused
