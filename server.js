@@ -3,14 +3,16 @@ var express = require('express'),
     app = express(),
 
     // import custom countwitt module
-    countwitt = require('./countwitt.js')
+    // and set up filter words
+    countwitt = require('./countwitt.js'),
+    counts = countwitt(['awesome']);
 
 
 // set up static file directory to allow for direct resource serving
 app.use(express.static(__dirname + '/client'));
 
 app.get('/count.json', function (req, res) {
-    res.json(countwitt);
+    res.json(counts);
 });
 
 // create http server and listen to port 3000
